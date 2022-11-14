@@ -1,21 +1,26 @@
-service: app
+service: e-toll
 
 provider:
-    name: aws
-    region: us-east-1
-    runtime: provided.al2
+  stage: prod
+  name: aws
+  region: eu-central-1
+  runtime: provided.al2
+  stackTags:
+    project: e-toll
+    type: code-challenge
+    stage: prod
 
 plugins:
-    - ./vendor/bref/bref
+  - ./vendor/bref/bref
 
 functions:
-    hello:
-        handler: index.php
-        description: ''
-        layers:
-            - ${bref:layer.php-74}
+  - ${file(src/tollCommunication/tollCommunication.yml)}
+
+resources:
+  - ${file(db.yml)}
+  - ${file(src/tollCommunication/tollCommunicationRole.yml)}
 
 # Exclude files from deployment
 package:
-    patterns:
-        - '!tests/**'
+  patterns:
+    - "!tests/**"

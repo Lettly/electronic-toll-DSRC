@@ -1,0 +1,8 @@
+tollCommunication:
+  handler: src/tollCommunication/tollCommunication.php
+  layers:
+    - ${bref:layer.php-74}
+  environment:
+    TOLL_HISTORY_TABLE: !Ref tollHistory
+    CHARGEMASTER_TABLE: !Ref chargeMaster
+  role: !GetAtt tollCommunicationRole.Arn
