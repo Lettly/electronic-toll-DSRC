@@ -15,12 +15,30 @@ plugins:
 
 functions:
   - ${file(src/tollCommunication/tollCommunication.yml)}
+  - ${file(src/getUserAmount/getUserAmount.yml)}
+  - ${file(src/getAllUsersAmounts/getAllUsersAmounts.yml)}
 
 resources:
   - ${file(db.yml)}
   - ${file(src/tollCommunication/tollCommunicationRole.yml)}
+  - ${file(src/getUserAmount/getUserAmountRole.yml)}
+  - ${file(src/getAllUsersAmounts/getAllUsersAmountsRole.yml)}
 
 # Exclude files from deployment
 package:
   patterns:
     - "!tests/**"
+
+outputs:
+  tollCommunication:
+    Value: !GetAtt tollCommunication.Url
+    Export:
+      Name: tollCommunicationUrl
+  getUserAmount:
+    Value: !GetAtt getUserAmount.Url
+    Export:
+      Name: getUserAmountUrl
+  getAllUsersAmounts:
+    Value: !GetAtt getAllUsersAmounts.Url
+    Export:
+      Name: getAllUsersAmountsUrl

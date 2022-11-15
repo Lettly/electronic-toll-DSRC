@@ -1,9 +1,8 @@
-tollCommunication:
-  handler: src/tollCommunication/tollCommunication.php
+getAllUsersAmounts:
+  handler: src/getAllUsersAmounts/getAllUsersAmounts.php
   layers:
     - ${bref:layer.php-74}
   environment:
     TOLL_HISTORY_TABLE: !Ref tollHistory
-    CHARGEMASTER_TABLE: !Ref chargeMaster
   url: true # We are cheap and don't want to pay for API Gateway (yet)
-  role: !GetAtt tollCommunicationRole.Arn
+  role: !GetAtt getAllUsersAmountsRole.Arn

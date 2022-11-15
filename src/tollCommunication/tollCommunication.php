@@ -33,6 +33,8 @@ return function ($event) {
 			throw new Exception('Device used twice at the same toll');
 		}
 
+		$fee = getFeeAmount($lastTollId, $TOLL_ID);
+
 		// put the entry in the database 
 		$GLOBALS['dynamoDb']->putItem([
 			'TableName' => $GLOBALS['TOLL_HISTORY_TABLE'],
@@ -42,7 +44,7 @@ return function ($event) {
 				'userId' => ['S' => $USER_ID],
 				'entryId' => ['S' => $lastTollId],
 				'exitId' => ['S' => $TOLL_ID],
-				'fee' => ['N' => (string)getFeeAmount($lastTollId, $TOLL_ID)]
+				'fee' => ['N' => (string)$fee]
 			]
 		]);
 	} else {
@@ -62,7 +64,8 @@ return function ($event) {
 	return [
 		'statusCode' => 200,
 		'body' => json_encode([
-			'success' => true
+			'success' => true,
+			'fee' => $fee ?? null,
 		])
 	];
 };
